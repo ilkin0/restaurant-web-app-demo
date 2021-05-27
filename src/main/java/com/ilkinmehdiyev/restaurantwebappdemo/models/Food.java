@@ -36,6 +36,9 @@ public class Food extends BaseEntity {
     @Column(name = "PRICE", columnDefinition = "INT")
     private BigDecimal price;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    private FoodDetails foodDetail;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "foods", cascade = CascadeType.PERSIST)
     private Set<Menu> menus = new HashSet<>();
 }
