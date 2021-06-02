@@ -1,5 +1,6 @@
-package com.ilkinmehdiyev.restaurantwebappdemo.models;
+package com.ilkinmehdiyev.restaurantwebappdemo.models.Food;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.models.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

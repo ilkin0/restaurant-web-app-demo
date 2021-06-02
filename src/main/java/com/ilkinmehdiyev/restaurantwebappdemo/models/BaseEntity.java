@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
-@EqualsAndHashCode(of = "{id}")
+@EqualsAndHashCode(of = {"id"})
 public class BaseEntity implements Serializable {
 
     @Id
@@ -26,7 +26,7 @@ public class BaseEntity implements Serializable {
     private long id;
 
     @CreationTimestamp
-    @Column(name = "CREATED_TIME", updatable = false)
+    @Column(name = "CREATED_TIME", updatable = false, nullable = false)
     @JsonIgnore
     @Setter(AccessLevel.PROTECTED)
     private LocalDateTime createdTime;

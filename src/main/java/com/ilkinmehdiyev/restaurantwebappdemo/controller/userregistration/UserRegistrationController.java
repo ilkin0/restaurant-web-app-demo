@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.controller.userregistration;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.exception.UserAlreadyExistsException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.dto.userregistration.UserRegistrationRequestDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.registration.UserRegistrationService;
 import com.ilkinmehdiyev.restaurantwebappdemo.util.Constant;
@@ -18,8 +19,8 @@ public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
 
-    @PostMapping()
-    public String register(@RequestBody UserRegistrationRequestDTO requestDTO) {
+    @PostMapping
+    public String register(@RequestBody UserRegistrationRequestDTO requestDTO) throws UserAlreadyExistsException {
         return userRegistrationService.register(requestDTO);
     }
 }

@@ -1,4 +1,6 @@
-package com.ilkinmehdiyev.restaurantwebappdemo.models;
+package com.ilkinmehdiyev.restaurantwebappdemo.models.Food;
+
+import com.ilkinmehdiyev.restaurantwebappdemo.models.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
