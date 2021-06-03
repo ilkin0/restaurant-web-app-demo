@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-class ApplicationUserServiceTest {
+class ApplicationUserServiceImplTest {
 
     @Mock
     private UserRepo userRepo;
 
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     private ApplicationUser passed;
     private ApplicationUser expected;
     private Food food;
@@ -58,7 +58,7 @@ class ApplicationUserServiceTest {
         when(userRepo.findByEmail(anyString()))
                 .thenReturn(Optional.of(expected));
 
-        UserDetails userByUsername = userService.loadUserByUsername(anyString());
+        UserDetails userByUsername = userServiceImpl.loadUserByUsername(anyString());
         assertEquals(expected, userByUsername);
     }
 }

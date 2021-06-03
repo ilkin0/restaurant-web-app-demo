@@ -1,6 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.security.config;
 
-import com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.user.UserService;
+import com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.user.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(userServiceImpl);
 
         return provider;
     }

@@ -1,14 +1,10 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.models.Token;
 
 import com.ilkinmehdiyev.restaurantwebappdemo.models.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.ilkinmehdiyev.restaurantwebappdemo.models.User.ApplicationUser;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,4 +20,17 @@ public class ConfirmationToken extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
+
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "app_user_id"
+    )
+    private ApplicationUser user;
+
+    public ConfirmationToken(String token, LocalDateTime expiresAt, ApplicationUser user) {
+        this.token = token;
+        this.expiresAt = expiresAt;
+        this.user = user;
+    }
 }

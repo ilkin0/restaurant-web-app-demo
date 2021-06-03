@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "APP_USER")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,10 +32,10 @@ public class ApplicationUser extends BaseEntity implements UserDetails, Credenti
     private String profilePicture;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    private boolean isLocked = false;
+    private boolean isNotLocked = false;
     private boolean isEnabled = false;
-    private boolean isExpired = false;
-    private boolean isCredentialsExpired = false;
+    private boolean isNotExpired = false;
+    private boolean isNotCredentialsExpired = false;
 
     public ApplicationUser(String firstName, String lastName, int age, String email, String username, String password,
                            UserRole userRole, String profilePicture) {
@@ -73,17 +73,17 @@ public class ApplicationUser extends BaseEntity implements UserDetails, Credenti
 
     @Override
     public boolean isAccountNonExpired() {
-        return isExpired;
+        return isNotExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isLocked;
+        return isNotLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isCredentialsExpired;
+        return isNotCredentialsExpired;
     }
 
     @Override

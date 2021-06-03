@@ -22,3 +22,6 @@ spring:
   #spring.jpa.properties.hibernate.format_sql=true
 server:
   port: 80
+
+confirmationtoken:
+  expireDuration: 15
