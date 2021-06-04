@@ -7,32 +7,41 @@ import com.ilkinmehdiyev.restaurantwebappdemo.models.Token.ConfirmationToken;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.ApplicationUser;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.UserRole;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.dto.userregistration.UserRegistrationRequestDTO;
-import com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.user.UserServiceImpl;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.confirmationtoken.ConfirmationTokenService;
+import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.email.EmailService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.registration.UserRegistrationService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.user.UserService;
+import com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools.buildEmail;
+
 @Service
 @AllArgsConstructor
+@PropertySource("classpath:application.yml")
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private final UserService userService;
-    private final EmailValidator emailValidator;
+    private final EmailTools emailTools;
     private final ConfirmationTokenService tokenService;
+    private final EmailService emailService;
+    private final Environment env;
 
     @Override
     public String register(UserRegistrationRequestDTO requestDTO) throws EmailIsNotValidException, UserAlreadyExistsException {
-        boolean isValidEmail = emailValidator.test(requestDTO.getEmail());
+        boolean isValidEmail = emailTools.test(requestDTO.getEmail());
         if (!isValidEmail) {
             throw new EmailIsNotValidException(requestDTO.getEmail());
         }
-        return userService.signUpUser(
+        String token = userService.signUpUser(
                 new ApplicationUser(
                         requestDTO.getFirstName(),
                         requestDTO.getLastName(),
@@ -44,6 +53,10 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                         requestDTO.getProfilePicture()
                 )
         );
+        emailService.send(requestDTO.getEmail(),
+                buildEmail(requestDTO.getFirstName(), env.getProperty("email.confirmation-link") + token));
+
+        return token;
     }
 
     @Override

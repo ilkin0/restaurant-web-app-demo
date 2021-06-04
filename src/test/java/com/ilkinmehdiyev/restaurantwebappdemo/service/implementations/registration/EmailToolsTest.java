@@ -1,11 +1,10 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.registration;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-class EmailValidatorTest {
+class EmailToolsTest {
 
     @Mock
-    private static EmailValidator emailValidator;
+    private static EmailTools emailTools;
 
     private static Pattern pattern;
     private Matcher matcher;
@@ -29,7 +28,7 @@ class EmailValidatorTest {
 
     @BeforeAll
     public static void setUp() {
-        emailValidator = new EmailValidator();
+        emailTools = new EmailTools();
         validEmail = "test1email@mail.com";
         validEmail = "notValidEmail";
         pattern = Pattern.compile(EMAIL_VALIDATION_PATTERN);
@@ -38,9 +37,9 @@ class EmailValidatorTest {
     @Test
     @DisplayName("test(test1email@mail.com)")
     public void validate_email_when_email_is_valid() {
-        when(emailValidator.test(validEmail)).thenReturn(true);
+        when(emailTools.test(validEmail)).thenReturn(true);
 
-        boolean isValidEmail = emailValidator.test(validEmail);
+        boolean isValidEmail = emailTools.test(validEmail);
         assertTrue(isValidEmail);
     }
 }

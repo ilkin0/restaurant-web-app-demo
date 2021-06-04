@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -41,8 +40,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public String signUpUser(ApplicationUser user) throws UserAlreadyExistsException {
         boolean userExists = userRepo.findByEmail(user.getEmail())
                 .isPresent();
+
+        // TODO check of attributes are the same and
+        // TODO if email not confirmed send confirmation email.
         if (userExists)
             throw new UserAlreadyExistsException(user.getEmail());
+
         String encodedUserPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedUserPassword);
 
