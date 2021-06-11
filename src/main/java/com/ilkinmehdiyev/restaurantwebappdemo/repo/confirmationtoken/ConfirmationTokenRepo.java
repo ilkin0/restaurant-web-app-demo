@@ -1,4 +1,4 @@
-package com.ilkinmehdiyev.restaurantwebappdemo.repo;
+package com.ilkinmehdiyev.restaurantwebappdemo.repo.confirmationtoken;
 
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Token.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;

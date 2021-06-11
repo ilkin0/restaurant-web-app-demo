@@ -3,7 +3,7 @@ package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.user;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.UserAlreadyExistsException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Token.ConfirmationToken;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.ApplicationUser;
-import com.ilkinmehdiyev.restaurantwebappdemo.repo.UserRepo;
+import com.ilkinmehdiyev.restaurantwebappdemo.repo.user.UserRepo;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.confirmationtoken.ConfirmationTokenService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final Environment env;
 
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_ERR_MESSAGE, email)));
     }

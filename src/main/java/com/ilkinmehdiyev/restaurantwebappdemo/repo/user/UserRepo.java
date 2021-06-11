@@ -1,4 +1,4 @@
-package com.ilkinmehdiyev.restaurantwebappdemo.repo;
+package com.ilkinmehdiyev.restaurantwebappdemo.repo.user;
 
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.ApplicationUser;
 import org.springframework.data.jpa.repository.Modifying;

@@ -13,7 +13,6 @@ import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.registration.Us
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.user.UserService;
 import com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
