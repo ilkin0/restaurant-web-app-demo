@@ -11,14 +11,13 @@ stages:
   - deploy
 
 before_script:
-#  - git update-index --chmod=+x gradlew
+  - git update-index --chmod=+x gradlew
 #  - chmod +x ./gradlew
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
   stage: build
   script:
-    - chmod +x ./gradlew
     - ./gradlew build
 
   cache:
