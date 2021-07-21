@@ -22,8 +22,8 @@ public class FoodController {
         return foodService.getAll();
     }
 
-    @GetMapping("{id}")
-    public Food getById(@PathVariable long id) throws EntityNotFoundException {
+    @GetMapping("/{id}")
+    public Food getById(@PathVariable("id") long id) throws EntityNotFoundException {
         return foodService.getById(id);
     }
 
@@ -32,12 +32,12 @@ public class FoodController {
         return foodService.save(food);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public Food update(@PathVariable long id, @RequestBody Food food) throws EntityNotFoundException {
         return foodService.update(id, food);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public Food deleteById(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
         return foodService.deleteById(id);
     }

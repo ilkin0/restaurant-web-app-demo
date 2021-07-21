@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntityPropertiesExpectId;
+
 @Service
 @AllArgsConstructor
 public class FoodServiceImpl implements FoodService {
@@ -35,9 +37,11 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food update(long id, Food foodNew) throws EntityNotFoundException {
-//        Optional<Food> foodById = foodRepo.findById(id);
-//        Food food = foodById.orElseThrow(() -> new EntityNotFoundException(Food.class, id));
-        return foodRepo.save(foodNew);
+        Optional<Food> foodById = foodRepo.findById(id);
+        Food food = foodById.orElseThrow(() -> new EntityNotFoundException(Food.class, id));
+
+        copyEntityPropertiesExpectId(food, foodNew);
+        return foodRepo.save(food);
     }
 
     @Override
