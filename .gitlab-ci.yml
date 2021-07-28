@@ -1,22 +1,24 @@
-# This is the Gradle build system for JVM applications
-# https://gradle.org/
-# https://github.com/gradle/gradle
 image: gradle:alpine
 
-# Disable the Gradle daemon for Continuous Integration servers as correctness
-# is usually a priority over speed in CI environments. Using a fresh
-# runtime for each build is more reliable since the runtime is completely
-# isolated from any previous builds.
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  DOCKER_REPO: $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_DEFAULT_REGION).amazonaws.com/restaurantwebapp-api
+
+stages:
+  - build
+  - test
+  - image
+  - deploy
 
 before_script:
+  - git update-index --chmod=+x gradlew
 #  - chmod +x ./gradlew
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
   stage: build
-  script: ./gradlew build
+  script:
+    - ./gradlew build
 
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -34,3 +36,34 @@ test:
     paths:
       - build
       - .gradle
+
+Build Docker:
+  stage: image
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  image:
+    name: amazon/aws-cli
+#    entrypoint: [""]
+  services:
+    - docker:dind
+#  extends:
+#  when: delayed
+#  start_in:
+  before_script:
+    - amazon-linux-extras install docker
+  script:
+    - docker build -t $DOCKER_REPO/restaurantwebapp-api:$CI_PIPELINE_IID .
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REPO
+    - docker push $DOCKER_REPO/restaurantwebapp-api:$CI_PIPELINE_IID
+
+DEV:
+  stage: deploy
+  script: echo "deploying docker DEV.."
+
+PROD:
+  stage: deploy
+  script: echo "deploying docker PROD.."
