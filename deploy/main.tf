@@ -6,8 +6,6 @@ terraform {
     region = "us-east-2"
     encrypt = true
     dynamodb_table = "restaurant-api-devops-tfstate-lock"
-//    access_key = "AKIAQEQR7I6VKE4WKWPQ"
-//    secret_key = "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"
   }
 }
 
