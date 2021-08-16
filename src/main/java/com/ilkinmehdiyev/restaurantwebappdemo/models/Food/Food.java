@@ -3,6 +3,7 @@ package com.ilkinmehdiyev.restaurantwebappdemo.models.Food;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

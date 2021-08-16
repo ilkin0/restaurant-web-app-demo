@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
@@ -39,6 +40,18 @@ public class MenuServiceImpl implements MenuService {
         Menu menu = menuOptional.orElseThrow(() -> new EntityNotFoundException(Menu.class, id));
 
         copyEntityPropertiesExpectId(menu, newMenu);
-        return menu;
+        return menuRepo.save(menu);
+    }
+
+    @Override
+    public Menu deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
+        Menu menuById = this.getById(id);
+
+        try {
+            menuRepo.delete(menuById);
+            return menuById;
+        } catch (Exception e) {
+            throw new EntityCouldNotBeDeletedException(Menu.class, id, e);
+        }
     }
 }

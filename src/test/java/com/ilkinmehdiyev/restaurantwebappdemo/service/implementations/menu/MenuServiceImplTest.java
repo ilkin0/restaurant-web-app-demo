@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
@@ -30,8 +31,10 @@ class MenuServiceImplTest {
         menuService = new MenuServiceImpl(menuRepo);
 
         passed = new Menu();
+        passed.setId(1L);
 
         expected = new Menu();
+        expected.setId(passed.getId());
     }
 
 
@@ -60,7 +63,7 @@ class MenuServiceImplTest {
     @Test
     @DisplayName("findById(" + Long.MAX_VALUE + ")")
     public void find_menu_by_id_when_not_exist() {
-        when(menuRepo.findById(Long.MAX_VALUE)).thenThrow(EntityNotFoundException.class);
+        when(menuRepo.findById(Long.MAX_VALUE)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () ->
                 menuService.getById(Long.MAX_VALUE));
@@ -88,9 +91,31 @@ class MenuServiceImplTest {
     @Test
     @DisplayName("update(" + Long.MAX_VALUE + ")")
     public void update_menu_when_not_exist() {
-        when(menuRepo.findById(Long.MAX_VALUE)).thenThrow(EntityNotFoundException.class);
+        when(menuRepo.findById(Long.MAX_VALUE)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () ->
                 menuService.update(Long.MAX_VALUE, passed));
+    }
+
+    @Test
+    @DisplayName("delete(id)")
+    public void delete_when_menu_exist() throws EntityNotFoundException {
+        when(menuRepo.findById(1L)).thenReturn(Optional.of(expected));
+        Menu deleteById = null;
+        try {
+            deleteById = menuService.deleteById(1L);
+        } catch (EntityCouldNotBeDeletedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(deleteById, passed);
+    }
+
+    @Test
+    @DisplayName("delete(" + Long.MAX_VALUE + ")")
+    public void delete_when_not_exist() {
+        when(menuRepo.findById(Long.MAX_VALUE)).thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, () ->
+                menuService.deleteById(Long.MAX_VALUE));
     }
 }

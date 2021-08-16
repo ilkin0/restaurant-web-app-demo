@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 
@@ -13,4 +14,6 @@ public interface MenuService {
     Menu save(Menu menu);
 
     Menu update(long id, Menu newMenu) throws EntityNotFoundException;
+
+    Menu deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException;
 }
