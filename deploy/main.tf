@@ -8,7 +8,6 @@ terraform {
     dynamodb_table = "restaurant-api-devops-tfstate-lock"
 //    profile = "ilkin.mehdiyev"
 //    shared_credentials_file = "~/.aws/config"
-//    token = "arn:aws:iam::009701377962:mfa/ilkin.mehdiyev"
   }
 }
 
