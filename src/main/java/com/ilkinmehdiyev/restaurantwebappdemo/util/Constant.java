@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Constant {
     public static final String API_URL = "/api/v1";
-    public static final String FOOD_URL = API_URL + "/food";
-    public static final String MENU_URL = API_URL + "/menu";
+    public static final String FOOD_URL = API_URL + "/foods";
+    public static final String MENU_URL = API_URL + "/menus";
     public static final String USER_REGISTRATION = API_URL + "/registration";
 
 

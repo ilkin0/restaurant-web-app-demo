@@ -40,8 +40,6 @@ class FoodControllerTest extends TestsConfiguration {
     @MockBean
     private FoodService foodService;
 
-    private static ModelMapper mapper;
-
     private static Food requestObject;
     private static String requestBody;
 
@@ -56,6 +54,8 @@ class FoodControllerTest extends TestsConfiguration {
 
     @BeforeAll
     public static void init() throws JsonProcessingException {
+        ModelMapper mapper = new ModelMapper();
+
         requestObject = new Food();
         requestObject.setName("name");
         requestObject.setDescription("desc");
@@ -66,6 +66,7 @@ class FoodControllerTest extends TestsConfiguration {
         requestBody = getJsonString(requestObject);
 
         requestObjectDTO = mapper.map(requestObject, FoodDTO.class);
+        requestBodyDTO = getJsonString(requestObjectDTO);
 
         responseObject = new Food();
         responseObject.setName(requestObject.getName());
@@ -77,16 +78,16 @@ class FoodControllerTest extends TestsConfiguration {
         responseBody = getJsonString(responseObject);
 
         responseObjectDTO = mapper.map(responseObject, FoodDTO.class);
+        responseBodyDTO = getJsonString(responseObjectDTO);
     }
 
 
     @Test
     @DisplayName("GET" + FOOD_URL)
     public void get_all() throws Exception {
-        List<Food> foodList = new ArrayList<>();
-        foodList.add(responseObject);
+        List<Food> foodList = List.of(responseObject);
 
-        List<FoodDTO> foodDTOs = (List<FoodDTO>) copyEntityListToDTOList(foodList, FoodDTO.class);
+        List<FoodDTO> foodDTOs = copyEntityListToDTOList(foodList, FoodDTO.class);
 
         when(foodService.getAll()).thenReturn(foodDTOs);
 
@@ -94,7 +95,7 @@ class FoodControllerTest extends TestsConfiguration {
                         get(FOOD_URL).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(getJsonString(foodList)));
+                .andExpect(content().json(getJsonString(foodDTOs)));
 
         verify(foodService).getAll();
 
@@ -110,7 +111,7 @@ class FoodControllerTest extends TestsConfiguration {
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(responseBody));
+                .andExpect(content().json(responseBodyDTO));
 
         verify(foodService).getById(1);
     }
@@ -137,11 +138,11 @@ class FoodControllerTest extends TestsConfiguration {
                         post(FOOD_URL)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
+                                .content(requestBodyDTO)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(responseBody));
+                .andExpect(content().json(responseBodyDTO));
 
         verify(foodService).save(requestObject);
     }
@@ -155,11 +156,11 @@ class FoodControllerTest extends TestsConfiguration {
                         put(FOOD_URL + "/1")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
+                                .content(requestBodyDTO)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(responseBody));
+                .andExpect(content().json(responseBodyDTO));
 
         verify(foodService).update(1L, requestObject);
     }
@@ -191,7 +192,7 @@ class FoodControllerTest extends TestsConfiguration {
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(responseBody));
+                .andExpect(content().json(responseBodyDTO));
 
         verify(foodService).deleteById(1L);
     }
@@ -203,7 +204,10 @@ class FoodControllerTest extends TestsConfiguration {
 
         mockMvc.perform(
                         delete(FOOD_URL + "/" + Long.MAX_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBodyDTO)
+                )
                 .andExpect(status().isNotFound());
 
         verify(foodService).deleteById(Long.MAX_VALUE);

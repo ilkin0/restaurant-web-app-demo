@@ -35,7 +35,8 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public FoodDTO getById(long id) throws EntityNotFoundException {
         Optional<Food> foodOptional = foodRepo.findById(id);
-        Food food = foodOptional.orElseThrow(() -> new EntityNotFoundException("Entity not found!"));
+        Food food = foodOptional
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found!"));
         return mapper.map(food, FoodDTO.class);
     }
 

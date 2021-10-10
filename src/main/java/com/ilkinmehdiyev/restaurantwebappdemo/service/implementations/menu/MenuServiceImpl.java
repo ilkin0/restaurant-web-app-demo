@@ -1,16 +1,19 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.MenuDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntityListToDTOList;
 import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntityPropertiesExpectId;
 
 @Service
@@ -18,39 +21,45 @@ import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntity
 public class MenuServiceImpl implements MenuService {
 
     private final MenuRepo menuRepo;
+    private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public List<Menu> getAll() {
-        return menuRepo.findAll();
+    public List<MenuDTO> getAll() {
+        List<Menu> menus = menuRepo.findAll();
+        return copyEntityListToDTOList(menus, MenuDTO.class);
     }
 
     @Override
-    public Menu getById(long id) throws EntityNotFoundException {
+    public MenuDTO getById(long id) throws EntityNotFoundException {
         Optional<Menu> optionalMenu = menuRepo.findById(id);
-        return optionalMenu.orElseThrow(() -> new EntityNotFoundException("Entity with " + id + " not found"));
+        Menu menu = optionalMenu
+                .orElseThrow(() -> new EntityNotFoundException("Entity with " + id + " not found"));
+        return mapper.map(menu, MenuDTO.class);
     }
 
     @Override
-    public Menu save(Menu menu) {
-        return menuRepo.save(menu);
+    public MenuDTO save(Menu menu) {
+        menuRepo.save(menu);
+        return mapper.map(menu, MenuDTO.class);
     }
 
     @Override
-    public Menu update(long id, Menu newMenu) throws EntityNotFoundException {
+    public MenuDTO update(long id, Menu newMenu) throws EntityNotFoundException {
 
         Optional<Menu> menuOptional = menuRepo.findById(id);
         Menu menu = menuOptional.orElseThrow(() -> new EntityNotFoundException(Menu.class, id));
 
         copyEntityPropertiesExpectId(menu, newMenu);
-        return menuRepo.save(menu);
+//        return menuRepo.save(menu);
+        return this.save(menu);
     }
 
     @Override
-    public Menu deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
-        Menu menuById = this.getById(id);
+    public MenuDTO deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
+        MenuDTO menuById = this.getById(id);
 
         try {
-            menuRepo.delete(menuById);
+            menuRepo.deleteById(id);
             return menuById;
         } catch (Exception e) {
             throw new EntityCouldNotBeDeletedException(Menu.class, id, e);

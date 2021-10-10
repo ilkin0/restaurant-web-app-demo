@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.controller.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.MenuDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
@@ -18,22 +19,22 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping
-    public List<Menu> findAll() {
+    public List<MenuDTO> findAll() {
         return menuService.getAll();
     }
 
     @GetMapping("{/id}")
-    public Menu findById(@PathVariable long id) throws EntityNotFoundException {
+    public MenuDTO getById(@PathVariable long id) throws EntityNotFoundException {
         return menuService.getById(id);
     }
 
     @PostMapping
-    public Menu save(@RequestBody Menu menu) {
+    public MenuDTO save(@RequestBody Menu menu) {
         return menuService.save(menu);
     }
 
     @PutMapping("{/id}")
-    public Menu update(
+    public MenuDTO update(
             @PathVariable long id,
             @RequestBody Menu menu
     ) throws EntityNotFoundException {
@@ -41,7 +42,7 @@ public class MenuController {
     }
 
     @DeleteMapping("{/id}")
-    public Menu delete(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
+    public MenuDTO delete(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
         return menuService.deleteById(id);
     }
 }

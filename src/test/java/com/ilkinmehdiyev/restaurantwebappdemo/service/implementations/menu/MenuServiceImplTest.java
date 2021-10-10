@@ -1,18 +1,23 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.menu;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.MenuDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu.MenuService;
+import com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntityListToDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -21,20 +26,28 @@ class MenuServiceImplTest {
 
     private static MenuRepo menuRepo;
     private static MenuService menuService;
+    private static ModelMapper mapper;
 
     private static Menu passed;
     private static Menu expected;
+
+    private static MenuDTO passedDTO;
+    private static MenuDTO expectedDTO;
 
     @BeforeAll
     public static void init() {
         menuRepo = mock(MenuRepo.class);
         menuService = new MenuServiceImpl(menuRepo);
+        mapper = new ModelMapper();
 
         passed = new Menu();
         passed.setId(1L);
+        passedDTO = mapper.map(passed, MenuDTO.class);
 
         expected = new Menu();
         expected.setId(passed.getId());
+
+        expectedDTO = mapper.map(expected, MenuDTO.class);
     }
 
 
@@ -46,8 +59,10 @@ class MenuServiceImplTest {
 
         when(menuRepo.findAll()).thenReturn(menuList);
 
-        List<Menu> menus = menuService.getAll();
-        assertEquals(menuList, menus);
+        List<MenuDTO> result = menuService.getAll();
+        List<MenuDTO> menuDTOS = copyEntityListToDTOList(menuList, MenuDTO.class);
+
+        assertEquals(menuDTOS, result);
         verify(menuRepo).findAll();
     }
 
@@ -56,8 +71,8 @@ class MenuServiceImplTest {
     public void find_menu_by_id_when_exist() throws EntityNotFoundException {
         when(menuRepo.findById(1L)).thenReturn(Optional.of(passed));
 
-        Menu menuById = menuService.getById(1L);
-        assertEquals(passed, menuById);
+        MenuDTO menuById = menuService.getById(1L);
+        assertEquals(passedDTO, menuById);
     }
 
     @Test
@@ -74,8 +89,8 @@ class MenuServiceImplTest {
     public void save_menu() {
         when(menuRepo.save(passed)).thenReturn(expected);
 
-        Menu saved = menuService.save(passed);
-        assertEquals(saved, passed);
+        MenuDTO saved = menuService.save(passed);
+        assertEquals(saved, passedDTO);
     }
 
     @Test
@@ -84,8 +99,8 @@ class MenuServiceImplTest {
         when(menuRepo.findById(1L)).thenReturn(Optional.of(expected));
         when(menuRepo.save(passed)).thenReturn(expected);
 
-        Menu update = menuService.update(1L, passed);
-        assertEquals(update, expected);
+        MenuDTO update = menuService.update(1L, passed);
+        assertEquals(update, expectedDTO);
     }
 
     @Test
@@ -101,14 +116,14 @@ class MenuServiceImplTest {
     @DisplayName("delete(id)")
     public void delete_when_menu_exist() throws EntityNotFoundException {
         when(menuRepo.findById(1L)).thenReturn(Optional.of(expected));
-        Menu deleteById = null;
+        MenuDTO deleteById = null;
         try {
             deleteById = menuService.deleteById(1L);
         } catch (EntityCouldNotBeDeletedException e) {
             e.printStackTrace();
         }
 
-        assertEquals(deleteById, passed);
+        assertEquals(deleteById, passedDTO);
     }
 
     @Test
