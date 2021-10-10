@@ -6,12 +6,14 @@ import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.ilkinmehdiyev.restaurantwebappdemo.util.EntityTools.copyEntityPropertiesExpectId;
 
+@Service
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
 

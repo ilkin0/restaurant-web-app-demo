@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,5 +18,10 @@ public class ApplicationConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ilkinmehdiyev.restaurantwebappdemo"))
                 .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

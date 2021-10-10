@@ -1,6 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.registration;
 
-import com.ilkinmehdiyev.restaurantwebappdemo.models.dto.userregistration.UserRegistrationRequestDTO;
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.userregistration.UserRegistrationRequestDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.repo.user.UserRepo;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.user.UserServiceImpl;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.confirmationtoken.ConfirmationTokenService;
@@ -8,15 +8,10 @@ import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.email.EmailServ
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.user.UserService;
 import com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Locale;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserRegistrationServiceImplTest {
 

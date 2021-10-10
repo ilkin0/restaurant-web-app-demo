@@ -1,18 +1,19 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.registration;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.token.ConfirmationTokenDTO;
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.userregistration.UserRegistrationRequestDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.ConfirmationTokenNotfoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EmailIsNotValidException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.UserAlreadyExistsException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Token.ConfirmationToken;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.ApplicationUser;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.User.UserRole;
-import com.ilkinmehdiyev.restaurantwebappdemo.models.dto.userregistration.UserRegistrationRequestDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.confirmationtoken.ConfirmationTokenService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.email.EmailService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.registration.UserRegistrationService;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.user.UserService;
 import com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 import static com.ilkinmehdiyev.restaurantwebappdemo.util.EmailTools.buildEmail;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
@@ -61,7 +62,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Override
     @Transactional
     public String confirmToken(String token) throws ConfirmationTokenNotfoundException {
-        ConfirmationToken confirmationToken = tokenService.getConfirmationToken(token)
+        ConfirmationTokenDTO confirmationToken = tokenService.getConfirmationToken(token)
                 .orElseThrow(ConfirmationTokenNotfoundException::new);
 
         if (confirmationToken.getConfirmedAt() != null)

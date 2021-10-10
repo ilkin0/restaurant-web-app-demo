@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +39,7 @@ class ApplicationUserServiceImplTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private ConfirmationTokenService tokenService;
     private Environment environment;
+    private ModelMapper mapper;
 
     private ApplicationUser passed;
     private ApplicationUser expected;
@@ -50,7 +52,7 @@ class ApplicationUserServiceImplTest {
         userRepo = mock(UserRepo.class);
         tokenRepo = mock(ConfirmationTokenRepo.class);
 
-        tokenService = new ConfirmationTokenServiceImpl(tokenRepo);
+        tokenService = new ConfirmationTokenServiceImpl(tokenRepo, mapper);
         userService = new UserServiceImpl(userRepo, bCryptPasswordEncoder, tokenService, environment);
         userDetailsService = mock(UserDetailsService.class);
 

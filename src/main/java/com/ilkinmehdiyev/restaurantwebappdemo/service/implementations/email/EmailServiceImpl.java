@@ -1,7 +1,7 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.email;
 
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.email.EmailService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
