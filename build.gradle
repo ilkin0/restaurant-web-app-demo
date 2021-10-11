@@ -27,6 +27,7 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation "org.modelmapper:modelmapper:$modelMapperVersion"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
@@ -39,3 +40,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+//TODO add all versions to gradle.properties

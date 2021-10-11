@@ -1,12 +1,9 @@
-package com.ilkinmehdiyev.restaurantwebappdemo.models.dto.userregistration;
+package com.ilkinmehdiyev.restaurantwebappdemo.dto.userregistration;
 
 import lombok.*;
 
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserRegistrationRequestDTO {
     private String firstName;
     private String lastName;

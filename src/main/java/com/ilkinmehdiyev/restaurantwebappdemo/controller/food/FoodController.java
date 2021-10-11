@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.controller.food;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.FoodDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Food;
@@ -18,27 +19,27 @@ public class FoodController {
     private final FoodService foodService;
 
     @GetMapping
-    public List<Food> getAll() {
+    public List<FoodDTO> getAll() {
         return foodService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Food getById(@PathVariable("id") long id) throws EntityNotFoundException {
+    public FoodDTO getById(@PathVariable("id") long id) throws EntityNotFoundException {
         return foodService.getById(id);
     }
 
     @PostMapping
-    public Food save(@RequestBody Food food) {
+    public FoodDTO save(@RequestBody Food food) {
         return foodService.save(food);
     }
 
     @PutMapping("/{id}")
-    public Food update(@PathVariable long id, @RequestBody Food food) throws EntityNotFoundException {
+    public FoodDTO update(@PathVariable long id, @RequestBody Food food) throws EntityNotFoundException {
         return foodService.update(id, food);
     }
 
     @DeleteMapping("/{id}")
-    public Food deleteById(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
+    public FoodDTO deleteById(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
         return foodService.deleteById(id);
     }
 

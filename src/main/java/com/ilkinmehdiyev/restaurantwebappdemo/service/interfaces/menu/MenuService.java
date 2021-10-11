@@ -1,5 +1,6 @@
 package com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu;
 
+import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.MenuDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityCouldNotBeDeletedException;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
@@ -7,13 +8,13 @@ import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import java.util.List;
 
 public interface MenuService {
-    List<Menu> getAll();
+    List<MenuDTO> getAll();
 
-    Menu getById(long id) throws EntityNotFoundException;
+    MenuDTO getById(long id) throws EntityNotFoundException;
 
-    Menu save(Menu menu);
+    MenuDTO save(Menu menu);
 
-    Menu update(long id, Menu newMenu) throws EntityNotFoundException;
+    MenuDTO update(long id, Menu newMenu) throws EntityNotFoundException;
 
-    Menu deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException;
+    MenuDTO deleteById(long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException;
 }
