@@ -3,7 +3,6 @@ package com.ilkinmehdiyev.restaurantwebappdemo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,8 +14,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
-@EqualsAndHashCode(of = {"id"})
-public class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +34,5 @@ public class BaseEntity implements Serializable {
     @JsonIgnore
     @Setter(AccessLevel.PROTECTED)
     private LocalDateTime updatedTime;
-
 
 }

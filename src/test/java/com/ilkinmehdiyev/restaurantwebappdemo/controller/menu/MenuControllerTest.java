@@ -6,16 +6,16 @@ import com.ilkinmehdiyev.restaurantwebappdemo.dto.food.MenuDTO;
 import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Food;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
-import com.ilkinmehdiyev.restaurantwebappdemo.repo.menu.MenuRepo;
-import com.ilkinmehdiyev.restaurantwebappdemo.service.implementations.menu.MenuServiceImpl;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu.MenuService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
 class MenuControllerTest extends TestsConfiguration {
 
     @Autowired

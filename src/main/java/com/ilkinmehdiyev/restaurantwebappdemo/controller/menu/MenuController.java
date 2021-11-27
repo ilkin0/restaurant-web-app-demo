@@ -6,8 +6,10 @@ import com.ilkinmehdiyev.restaurantwebappdemo.exception.EntityNotFoundException;
 import com.ilkinmehdiyev.restaurantwebappdemo.models.Food.Menu;
 import com.ilkinmehdiyev.restaurantwebappdemo.service.interfaces.menu.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 
 import static com.ilkinmehdiyev.restaurantwebappdemo.util.Constant.MENU_URL;
@@ -23,7 +25,7 @@ public class MenuController {
         return menuService.getAll();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public MenuDTO getById(@PathVariable long id) throws EntityNotFoundException {
         return menuService.getById(id);
     }
@@ -41,7 +43,7 @@ public class MenuController {
         return menuService.update(id, menu);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public MenuDTO delete(@PathVariable long id) throws EntityCouldNotBeDeletedException, EntityNotFoundException {
         return menuService.deleteById(id);
     }

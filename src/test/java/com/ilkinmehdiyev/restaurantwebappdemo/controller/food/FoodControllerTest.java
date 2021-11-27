@@ -208,7 +208,7 @@ class FoodControllerTest extends TestsConfiguration {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBodyDTO)
                 )
-                .andExpect(status().isNotFound());
+                .andExpect(status().isConflict());
 
         verify(foodService).deleteById(Long.MAX_VALUE);
     }

@@ -43,4 +43,7 @@ public class Food extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "foods", cascade = CascadeType.PERSIST)
     private Set<Menu> menus = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "foods", cascade = CascadeType.PERSIST)
+    private Set<Menu> categories = new HashSet<>();
 }

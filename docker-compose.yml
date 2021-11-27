@@ -1,0 +1,14 @@
+service:
+  db:
+    name: pg-docker
+    image: postgres:alpine
+    volumes:
+      pg_data/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environments:
+      POSTGRES_PASSWORD: postgres
+
+
+volumes:
+  pg_data
