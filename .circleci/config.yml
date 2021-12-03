@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run: chmod +x ./gradlew
+      - run:
+          name: Initializing Database
+          command: ./scripts/init-db.sh
       - run: ./gradlew build
   buildDockerImage:
     working_directory: /app
