@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   buildApp:
     docker:
-      - image: cimg/openjdk:17-jdk
+      - image: cimg/openjdk:17.0.0-jdk
     steps:
       - checkout
       - run: chmod +x ./gradlew
@@ -40,13 +40,13 @@ jobs:
                   - /caches/app.tar
   pushDockerImage:
     docker:
-      - image: cimg/openjdk:17-jdk
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Push application Docker image
-          command: ./sripts/aws-docker-push.sh
+          command: ./scripts/aws-docker-push.sh
 
 
 
