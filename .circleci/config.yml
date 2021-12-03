@@ -44,7 +44,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - deploy:
+    deploy:
           name: Push application Docker image
           run: ./sripts/aws-docker-push.sh
 
