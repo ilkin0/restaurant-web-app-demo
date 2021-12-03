@@ -6,7 +6,7 @@ jobs:
       - image: cimg/openjdk:17.0.0
     steps:
       - checkout
-      - run: chmod +x ./gradlew
+      - run: chmod +x -R ./gradlew ./scripts
       - run:
           name: Initializing Database
           command: ./scripts/init-db.sh
