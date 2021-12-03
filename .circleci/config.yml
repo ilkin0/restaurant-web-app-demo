@@ -13,8 +13,7 @@ jobs:
           command: ./scripts/init-db.sh
   buildApp:
     docker:
-      #      - image: cimg/openjdk:17.0.0
-      - image: cimg/base:2021.11
+      - image: cimg/openjdk:17.0.0
     steps:
       - checkout
       - setup_remote_docker
