@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   buildApp:
     docker:
-      - image: cimg/openjdk:17.0.0-jdk
+      - image: cimg/openjdk:17.0.0
     steps:
       - checkout
       - run: chmod +x ./gradlew
