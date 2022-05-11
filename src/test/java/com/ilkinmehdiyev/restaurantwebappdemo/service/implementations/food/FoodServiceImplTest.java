@@ -45,7 +45,7 @@ public class FoodServiceImplTest {
         expected = new Food();
         expected.setId(passed.getId());
         expectedDTO = new FoodDTO();
-        expectedDTO.setId(expected.getId());
+            expectedDTO.setId(expected.getId());
     }
 
 

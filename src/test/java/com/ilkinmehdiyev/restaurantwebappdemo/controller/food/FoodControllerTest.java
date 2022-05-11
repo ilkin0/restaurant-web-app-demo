@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.ilkinmehdiyev.restaurantwebappdemo.util.Constant.FOOD_URL;
@@ -85,11 +84,11 @@ class FoodControllerTest extends TestsConfiguration {
     @Test
     @DisplayName("GET" + FOOD_URL)
     public void get_all() throws Exception {
-        List<Food> foodList = List.of(responseObject);
+            List<Food> foodList = List.of(responseObject);
 
-        List<FoodDTO> foodDTOs = copyEntityListToDTOList(foodList, FoodDTO.class);
+            List<FoodDTO> foodDTOs = copyEntityListToDTOList(foodList, FoodDTO.class);
 
-        when(foodService.getAll()).thenReturn(foodDTOs);
+                    when(foodService.getAll()).thenReturn(foodDTOs);
 
         mockMvc.perform(
                         get(FOOD_URL).accept(MediaType.APPLICATION_JSON))
